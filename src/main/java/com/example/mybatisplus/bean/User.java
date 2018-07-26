@@ -31,8 +31,6 @@ public class User implements Serializable {
      * 用户年龄
      */
     private Integer age;
-
-
     public Integer getId() {
         return id;
     }
