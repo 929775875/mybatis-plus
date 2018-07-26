@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 }
