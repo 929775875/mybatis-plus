@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/html">
+<script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+<head>
+    <title>Hello World!</title>
+</head>
+    <body>
+        <form id="loginFrom">
+            <div>
+                <h2>管理登录</h2>
+                <span><label>用户名</label></span>
+                <span><input type="text" id="sysloginname" name="sysloginname" onkeypress="if(event.keyCode==13){ doLogin()};" class="validate[require] textbox" maxlength="15"/></span>
+            </div>
+            <div>
+                <span><label>密码</label></span>
+                <span><input type="password" id="sysloginpass" name="sysloginpass" onkeypress="if(event.keyCode==13){ doLogin()};" class="validate[require] password " maxlength="15"/></span>
+            </div>
+            <div class="sign">
+                <input type="button" value="登录" class="submit" onclick="doLogin();" />
+            </div>
+        </form>
+    </body>
+
+</html>
+<script>
+    //登录JS
+    function doLogin() {
+        if ($("#loginFrom").validationEngine('validate')) {
+            var submitOptions = {
+                target : '#loginFrom',
+                url : "${pageContext.request.contextPath}/dologin.html",
+                type : 'post',
+                dataType : 'html',
+                cache : false,
+                async : false,
+                error : function(xhr) {
+                },
+                success : function(data) {
+                    var r = eval('(' + data + ')');
+                    if (r.flag) {
+                        window.location.href = "${pageContext.request.contextPath}/toappmain.html";
+                    } else {
+                        alert(r.msg);
+                    }
+                }
+            }
+            $('#loginFrom').ajaxSubmit(submitOptions);
+        }
+    }
+</script>
